@@ -7,7 +7,7 @@ FileCacheManager* FileCacheManager::fileCacheManager = 0;
 
 FileCacheManager::FileCacheManager() {}
 /**
- * creating one state of this class so there will be only one object
+ * Creating one state of this class so there will be only one object
  * @return the only existing object
  */
 FileCacheManager * FileCacheManager::getFileCacheManager() {
@@ -33,7 +33,7 @@ bool FileCacheManager::Find(string problem) {
 void FileCacheManager::save(string solution, string problem) {
     fstream file;
     file.open(problem,ios::out);
-    if(!file){
+    if(!file){ //We couldn't find the file
         throw "no file been opened";
     }
     file<<solution<<endl;
@@ -44,7 +44,7 @@ void FileCacheManager::save(string solution, string problem) {
 }
 
 /**
- * if the solution exist return it
+ * If the solution exist then, return it
  * @param problem
  * @return the solution to the problem
  */
@@ -52,7 +52,7 @@ string FileCacheManager::get(string problem) {
     if(Find(problem)) {
         fstream file;
         file.open(problem,ios::in);
-        if(!file) {
+        if(!file) { //We couldn't find the file
             throw "no file been opened";
         }
         string solution = "";
