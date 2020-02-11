@@ -8,8 +8,8 @@
 
 class ClientHandler {
 public:
-    virtual void handleClient(int input, int output) = 0;
-    virtual ClientHandler* clone() = 0;
+    virtual void handleClient(int input, int output) = 0; //Handling the clinet
+    virtual ClientHandler* clone() = 0; // Since I need to use a few clients parallely, I required a method that clone my clientHandle
 };
 
 
