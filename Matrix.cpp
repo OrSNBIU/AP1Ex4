@@ -3,7 +3,7 @@
 //
 
 #include "Matrix.h"
-
+//Establishing a matrix of states to serve searchable. The matrix is our searchable.
 Matrix::Matrix(std::vector<double> input) {
     double col_last = input.back();
     input.pop_back();
