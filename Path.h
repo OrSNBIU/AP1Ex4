@@ -1,7 +1,7 @@
 //
 // Created by grufix on 31/01/2020.
 //
-
+//Header file for Path class.
 #ifndef ALGORITHEMBRIDGE_PATH_H
 #define ALGORITHEMBRIDGE_PATH_H
 
