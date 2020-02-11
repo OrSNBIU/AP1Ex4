@@ -1,7 +1,7 @@
 //
 // Created by grufix on 01/02/2020.
 //
-
+//Header file for Point class
 #ifndef ALGORITHEMBRIDGE_POINT_H
 #define ALGORITHEMBRIDGE_POINT_H
 
