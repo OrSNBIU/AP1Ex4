@@ -12,8 +12,8 @@
 class MySerialServer : public Server {
 public:
     MySerialServer();
-    void open(int port, ClientHandler *cm) override ;
-    void stop() override ;
+    void open(int port, ClientHandler *cm) override; //Overrides open method of Server
+    void stop() override; //Overrides stop method from Server
 };
 
 
