@@ -8,7 +8,7 @@ StringReverser::StringReverser() {}
 
 string StringReverser::solve(string problem) {
     string reverse = "";
-    for(int i = problem.length() - 1; i >= 0; i--) {
+    for(int i = problem.length() - 1; i >= 0; i--) { //Reversing the string using a reversed loop.
         reverse += problem[i];
     }
     return reverse;
