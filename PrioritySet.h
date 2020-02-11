@@ -1,7 +1,7 @@
 //
 // Created by grufix on 28/01/2020.
 //
-
+//Header file for PrioritySet class.
 #ifndef MILD2_PRIORITYSET_H
 #define MILD2_PRIORITYSET_H
 
