@@ -16,8 +16,11 @@ class Main {
 public:
     void main(char** args) {
         ClientHandler *clientHandler = new MyTestClientHandler( new StringReverser(), FileCacheManager::getFileCacheManager() );
+        //Creates a new static instance of *clientHandler with a dynamic type of MyTestClientHandler.
         Server *server = new MySerialServer();
+        //Creates a new static instance of *server with a dynamic type of MySerialServer.
         server->open(stoi(args[0]),clientHandler);
+        //Calling open method using value given in the arguments.
     }
 };
 
