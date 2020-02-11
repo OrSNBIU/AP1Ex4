@@ -1,7 +1,7 @@
 //
 // Created by grufix on 25/01/2020.
 //
-
+//Header file for Solver class.
 #ifndef MILD2_SOLVER_H
 #define MILD2_SOLVER_H
 
