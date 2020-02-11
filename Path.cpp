@@ -1,7 +1,7 @@
 //
 // Created by grufix on 31/01/2020.
 //
-
+//Restores my solution (How to navigate the matrix).
 #include "Path.h"
 template<class T>
 Path<T>::Path() {_length = 0; _evaluated = 0;}
