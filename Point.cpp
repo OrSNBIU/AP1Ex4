@@ -1,7 +1,7 @@
 //
 // Created by grufix on 01/02/2020.
 //
-
+//A location in my graph.
 #include "Point.h"
 
 Point::Point(int row, int col, double cost) {
