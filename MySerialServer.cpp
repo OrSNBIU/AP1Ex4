@@ -12,7 +12,7 @@ void callHandler(ClientHandler *cm,int input, int output) {
     ClientHandler *cm_new = cm->clone();
     cm_new->handleClient(input, output);
 }
-
+//Handles my serial server
 void handleClients(int server_sock, sockaddr_in addr,ClientHandler* cm) {
     //initiating timeout
     struct timeval tv;
