@@ -1,7 +1,7 @@
 //
 // Created by grufix on 28/01/2020.
 //
-
+//Intended for use in Searchable.
 #include "PrioritySet.h"
 template<class T>
 void compare_nocase(T a1, T a2) {
