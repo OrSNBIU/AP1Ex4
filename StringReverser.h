@@ -1,7 +1,7 @@
 //
 // Created by grufix on 25/01/2020.
 //
-
+//Header file for StringReverser
 #ifndef MILD2_STRINGREVERSER_H
 #define MILD2_STRINGREVERSER_H
 
