@@ -1,7 +1,7 @@
 //
 // Created by grufix on 06/02/2020.
 //
-
+//Header file for Matrix class.
 #ifndef ALGORITHEMBRIDGE_MATRIX_H
 #define ALGORITHEMBRIDGE_MATRIX_H
 
@@ -20,7 +20,7 @@ public:
     Matrix(std::vector<double> input);
     State<Point>* getInitialState();
     bool isGoalState(State<Point> *state);
-    std::list<State<Point>* > getAllPosibleStates(State<Point> state);
+    std::list<State<Point>* > getAllPosibleStates(State<Point> state); //To learn how can I move.
 };
 
 
