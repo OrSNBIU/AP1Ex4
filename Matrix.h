@@ -1,26 +1,30 @@
 //
 // Created by grufix on 06/02/2020.
 //
-//Header file for Matrix class.
+
 #ifndef ALGORITHEMBRIDGE_MATRIX_H
 #define ALGORITHEMBRIDGE_MATRIX_H
 
 
-#include "Point.h"
 #include "State.h"
 #include "Searchable.h"
+#include "PointState.h"
 #include <vector>
 
-class Matrix : public Searchable<Point> {
-int size;
-State<Point> *goal;
-State<Point> *initial;
-std::vector<State<Point>*> states;
+class Matrix : public Searchable<std::pair<int,int>> {
+int sizeR,sizeC;
+State<std::pair<int,int>> *goal;
+State<std::pair<int,int>> *initial;
+std::vector<State<std::pair<int,int>>*> states;
+
 public:
     Matrix(std::vector<double> input);
-    State<Point>* getInitialState();
-    bool isGoalState(State<Point> *state);
-    std::list<State<Point>* > getAllPosibleStates(State<Point> state); //To learn how can I move.
+    State<std::pair<int,int>>* getInitialState() override ;
+    bool isGoalState(State<std::pair<int,int>> *state) override ;
+    std::list<State<std::pair<int,int>>*> getAllPosibleStates(State<std::pair<int,int>>* state) override ;
+    int getsize() { return sizeR; }
+
+    double getHuristicVal(State<std::pair<int, int>> *pState);
 };
 
 

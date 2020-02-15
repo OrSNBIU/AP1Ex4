@@ -1,27 +1,31 @@
 //
-// Created by grufix on 31/01/2020.
+// Created by grufix on 11/02/2020.
 //
 
-#ifndef ALGORITHEMBRIDGE_BESTFIRSTSEARCH_H
-#define ALGORITHEMBRIDGE_BESTFIRSTSEARCH_H
+#ifndef ALGORITHEMBRIDGE_ASTAR_H
+#define ALGORITHEMBRIDGE_ASTAR_H
+
 
 #include <vector>
 #include "Path.h"
-#include "Searchable.h"
-#include "BestFirstSearchComperator.h"
+#include "ISearcher.h"
 #include "PriorityQueue.h"
-#include"ISearcher.h"
+#include "AStarComperator.h"
 
 template<class T>
-class BestFirstSearch : public ISearcher<T,std::vector<std::string>> {
-    PriorityQueue<State<T>*,BestFirstSearchComperator<T>>* open = 0;
+class AStar : public ISearcher<T,std::vector<std::string>> {
+    PriorityQueue<State<T>*,AStarComperator<T>>* open = 0;
     int evaluatedNodes = 0;
 public:
-    BestFirstSearch() {
-        open = new PriorityQueue<State<T>*,BestFirstSearch<T>>();
+    AStar()  {
+        open = new PriorityQueue<State<T>*,AStarComperator<T>>();
     }
 
-    std::vector<std::string> search(Searchable<T>* searchable) override;
+    /*
+     *for some uncleared reason when we tried the inheritance method, we got Errors for reasons un knowen
+     *  so we decided to copy...we tried...
+     */
+
 
     void OpenInset(State<T> *state) {
         open->push(state);
@@ -54,7 +58,9 @@ public:
     std::vector<std::string> getPath(State<T>* state) {
         open->update(state);
     }
+
+    std::vector<std::string> search(Searchable<T> *searchable) override ;
 };
 
 
-#endif //ALGORITHEMBRIDGE_BESTFIRSTSEARCH_H
+#endif //ALGORITHEMBRIDGE_ASTAR_H

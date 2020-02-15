@@ -7,21 +7,27 @@
 
 
 #include <queue>
-#include "IShearcher.h"
-template <class T,class Solution>
-class Searcher : public IShearcher<T,Solution>{
-std::priority_queue<State<T>> open;
-int evaluatedNodes;
+#include "ISearcher.h"
+#include "PriorityQueue.h"
+#include "Path.h"
+#include<iostream>
 
+template <class T,class Comperator>
+class Searcher : public ISearcher<T,std::vector<std::string>>{
+protected:
+    PriorityQueue<State<T>*,Comperator>* open = 0;
+    int evaluatedNodes = 0;
 public:
-    Searcher();
-    void OpenInset(State<T> state);
-    void OpenRemove(State<T> state);
-    State<T> popOpen();
-    int OpenSize();
-    int numOfNodesEvaluated() override ;
-    bool isInOpen(State<T> state);
-    virtual Solution search(Searchable<T> searchable) = 0;
+    Searcher(PriorityQueue<State<T>*,Comperator>* p_q){
+        open = p_q;
+    }
+
+
+    virtual std::vector<std::string> search(Searchable<T> *searchable) = 0;
+
+    ~Searcher() {
+        delete(open);
+    }
 };
 
 

@@ -1,20 +1,21 @@
 //
 // Created by grufix on 31/01/2020.
 //
-//Header file for Path class.
+
 #ifndef ALGORITHEMBRIDGE_PATH_H
 #define ALGORITHEMBRIDGE_PATH_H
 
 #include <list>
 #include <iostream>
+#include "State.h"
 
 template<class T>
 class Path {
-std::list<std::string> path;
+std::list<State<T>*> path;
 int _length, _evaluated;
 public:
-    Path();
-    void insertToPath(std::string step);
+    Path(State<T>* state);
+    void insertToPath(State<T>* state);
     std::list<std::string> getPath();
     void setLength(int _length);
     int getLength();

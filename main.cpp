@@ -1,6 +1,9 @@
 #include <iostream>
+#include "AlgorithemsTesting.h"
 
+using namespace std;
 int main() {
-    std::cout << "Hello, World!" << std::endl;
+    AlgorithemsTesting test;
+    test.testall();
     return 0;
 }
