@@ -12,7 +12,7 @@
 template <class T>
 class BreadthFirstSearch : public ISearcher<T,std::vector<std::string>> {
     std::list<State<T>*> open;
-    int evaluatedNodes;
+    int evaluatedNodes = 0;
 public:
     BreadthFirstSearch();
     bool isInOpen(State<T>* state);

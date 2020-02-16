@@ -6,6 +6,11 @@
 #include <vector>
 #include <algorithm>
 
+template <class T>
+BestFirstSearch<T>::BestFirstSearch()  {
+    this->setOpen(BestFirstSearchComperator<T>());
+    this->evaluatedNodes = 0;
+}
 
 template<class T>
 std::vector<std::string> BestFirstSearch<T>::search(Searchable<T>* searchable) {

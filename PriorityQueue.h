@@ -15,13 +15,14 @@ std::priority_queue<State<T>*, std::vector<State<T>*>,Comperator> _queue;
 std::unordered_map<std::string,State<T>*> _states;
 
 public:
-    PriorityQueue(const Comperator &func);
+    void setQueue(Comperator func);
     State<T>* top();
     void pop();
     void push(State<T>* state);
     void update(State<T>* state);
     int getSize();
     bool Find(State<T>* state);
+
 };
 
 

@@ -4,6 +4,13 @@
 
 #include "AStar.h"
 
+
+template <class T>
+AStar<T>::AStar() {
+    this->setOpen(AStarComperator<T>());
+    this->evaluatedNodes = 0;
+}
+
 template <class T>
 std::vector<std::string> AStar<T>::search(Searchable<T> *searchable) {
     int currentCost;

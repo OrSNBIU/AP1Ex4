@@ -15,19 +15,18 @@
 template <class T,class Comperator>
 class Searcher : public ISearcher<T,std::vector<std::string>>{
 protected:
-    PriorityQueue<State<T>*,Comperator>* open = 0;
+    PriorityQueue<T,Comperator> open ;
     int evaluatedNodes = 0;
 public:
-    Searcher(PriorityQueue<State<T>*,Comperator>* p_q){
-        open = p_q;
-    }
-
+    void setOpen(const Comperator& comperator );
+    void OpenInset(State<T> *state);
+    void update(State<T> *state);
+    State<T>* popOpen();
+    int OpenSize();
+    int numOfNodesEvaluated() override;
+    bool isInOpen(State<T> *state);
 
     virtual std::vector<std::string> search(Searchable<T> *searchable) = 0;
-
-    ~Searcher() {
-        delete(open);
-    }
 };
 
 

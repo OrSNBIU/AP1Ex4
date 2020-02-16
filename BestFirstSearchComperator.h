@@ -10,9 +10,7 @@
 template<class T>
 class BestFirstSearchComperator {
 public:
-    bool operator()(State<T>* s1,State<T>* s2) {
-        return s1->getMoving() > s2->getMoving();
-    }
+    bool operator()(State<T>* s1,State<T>* s2);
 };
 
 

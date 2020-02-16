@@ -6,6 +6,9 @@
 
 
 
+PointState::PointState(std::pair<int,int> state,double cost) : State(state,cost){}
+
+
 bool PointState::Equal(State<std::pair<int,int>> *state) {
     return (state->getState().first == _state.first && state->getState().second == _state.second);
 }

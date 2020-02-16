@@ -6,9 +6,7 @@
 #include "BreadthFirstSearch.h"
 
 template <class T>
-BreadthFirstSearch<T>::BreadthFirstSearch() {
-    evaluatedNodes = 0;
-}
+BreadthFirstSearch<T>::BreadthFirstSearch() {}
 
 template <class T>
 std::vector<std::string>  BreadthFirstSearch<T>::search(Searchable<T> *searchable) {

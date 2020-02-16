@@ -31,6 +31,13 @@ Matrix::Matrix(std::vector<double> input) {
     }
 }
 
+Matrix::~Matrix() {
+    delete (initial);
+    delete(goal);
+}
+
+int Matrix::getsize() { return sizeR; }
+
 State<std::pair<int,int>>* Matrix::getInitialState() {
     return initial;
 }

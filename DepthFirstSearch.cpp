@@ -5,13 +5,12 @@
 
 #include "DepthFirstSearch.h"
 
+
+template<class T>
+DepthFirstSearch<T>::DepthFirstSearch() {}
+
 template <class T>
-DepthFirstSearch<T>::DepthFirstSearch() {
-    evaluatedNodes = 0;
-    minCost = 0;
-}
-
-
+DepthFirstSearch<T>::~DepthFirstSearch<T>()  { delete(bestPath);}
 
 
 template<class T>

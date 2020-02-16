@@ -22,9 +22,9 @@ public:
     State<std::pair<int,int>>* getInitialState() override ;
     bool isGoalState(State<std::pair<int,int>> *state) override ;
     std::list<State<std::pair<int,int>>*> getAllPosibleStates(State<std::pair<int,int>>* state) override ;
-    int getsize() { return sizeR; }
-
+    int getsize();
     double getHuristicVal(State<std::pair<int, int>> *pState);
+    ~Matrix();
 };
 
 

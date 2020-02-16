@@ -11,7 +11,7 @@
 
 class PointState : public State<std::pair<int,int>>{
 public:
-    PointState(std::pair<int,int> state, double cost) : State(state,cost){}
+    PointState(std::pair<int,int> state, double cost);
     bool Equal(State<std::pair<int,int>>* state) override;
     bool operator==(State<std::pair<int,int>>* state) override;
     std::string toString() override;
