@@ -51,7 +51,12 @@ public:
     ~State();
 
 };
-
+/**
+ * Ctor
+ * @tparam T
+ * @param state
+ * @param cost
+ */
 template <class T>
 State<T>::State(T state, double cost) {
     _state = state;
@@ -61,53 +66,97 @@ State<T>::State(T state, double cost) {
     _cameFrom= 0;
 }
 
+/**
+ * return the cost of the path till here
+ * @tparam T
+ * @return
+ */
 template <class T>
 double State<T>::getMoving() {
     return _moving;
 }
 
+/**
+ * return the father
+ * @tparam T
+ * @return
+ */
 template <class T>
 State<T> * State<T>::getCameFrom()  { return _cameFrom;}
 
+/**
+ * return the state's data
+ * @tparam T
+ * @return
+ */
 template <class T>
 T State<T>::getState() { return _state;};
 
-
+/**
+ * return the huristic value
+ * @tparam T
+ * @return
+ */
 template <class T>
 double State<T>::getHuristic()  {
     return _huristicCost;
 }
 
 
-
+/**
+ * set a huristic valse
+ * @tparam T
+ * @param cost value to set
+ */
 template <class T>
 void State<T>::setHuristic(double cost)  {
     _huristicCost = cost;
 }
 
-
+/**
+ * return the step in cost
+ * @tparam T
+ * @return
+ */
 template <class T>
 double State<T>::getCost()  {
     return _cost;
 }
 
-
+/**
+ * set the step in cost
+ * @tparam T
+ * @param cost
+ */
 template <class T>
 void State<T>::setCost(double cost) {
     _cost = cost;
     _moving = cost;
 }
 
+/**
+ * update the cost of the path till here
+ * @tparam T
+ * @param moving cost of new path to here
+ */
 template <class T>
 void State<T>::updateMoving(double moving)  {
     _moving = _cost + moving;
 }
 
 
-
+/**
+ * set the father
+ * @tparam T
+ * @param state the father
+ */
 template <class T>
 void State<T>::setWhereFrom(State<T> *state)  { _cameFrom = state;}
 
+/**
+ * Dtor
+ * @tparam T
+ */
 template <class T>
 State<T>::~State() { delete(_cameFrom);}
 
@@ -117,17 +166,18 @@ State<T>::~State() { delete(_cameFrom);}
 template<class T>
 class Path {
     std::vector<State<T>*> path;
-    int _length, _evaluated;
 public:
     Path(State<T>* state);
     void insertToPath(State<T>* state);
     std::vector<std::string> getPath();
-    void setLength(int _length);
-    int getLength();
-    void setEvaluated(int evaluated);
-    int getEvaluated();
+
 };
 
+/**
+ * Ctor
+ * @tparam T
+ * @param goal
+ */
 template<class T>
 Path<T>::Path(State<T>* goal) {
     State<T>* state = goal;
@@ -135,15 +185,23 @@ Path<T>::Path(State<T>* goal) {
         path.push_back(state);
         state = state->getCameFrom();
     }
-    _length = 0; _evaluated = 0;
 }
 
+/**
+ * isert new node to the path
+ * @tparam T
+ * @param state
+ */
 template<class T>
 void Path<T>::insertToPath(State<T>* state) {
     path.push_back(state);
-    _length++;
 }
 
+/**
+ * return the steps to the goal
+ * @tparam T
+ * @return
+ */
 template<class T>
 std::vector<std::string> Path<T>::getPath() {
     std::vector<std::string> moves;
@@ -154,27 +212,6 @@ std::vector<std::string> Path<T>::getPath() {
     }
     return moves;
 }
-
-template<class T>
-void Path<T>::setLength(int length) {
-    _length = length;
-}
-
-template<class T>
-int Path<T>::getLength() {return _length;}
-
-template<class T>
-void Path<T>::setEvaluated(int evaluated) {
-    _evaluated = _evaluated;
-}
-
-template<class T>
-int Path<T>::getEvaluated() {return _evaluated;}
-
-
-
-
-
 
 //-----------------------------------------------------------------------------
 template <class T>
@@ -210,16 +247,29 @@ public:
     State<std::pair<int,int>>* clone() override ;
 };
 
+/**
+ * Ctor
+ * @param state
+ * @param cost
+ */
 PointState::PointState(std::pair<int,int> state,double cost) : State(state,cost){
     name = this->toString();
 }
 
-
+/**
+ * check if this state equal to the given state
+ * @param state
+ * @return
+ */
 bool PointState::Equal(State<std::pair<int,int>> *state) {
     return (state->getState().first == _state.first && state->getState().second == _state.second);
 }
 
-
+/**
+ * operator is equal
+ * @param state
+ * @return
+ */
 bool PointState::operator==(State<std::pair<int,int>> *state) {
     return Equal(state);
 }
@@ -235,13 +285,13 @@ std::string PointState::getSide(State<std::pair<int, int> > *state) {
     x_other = state->getState().first;
     y_other = state->getState().second;
     if(x_self + 1 == x_other && y_other == y_self)
-        return "Right";
-    else if(x_self + 1 == x_other && y_other == y_self)
-        return "Left";
-    else if(y_self + 1 == y_other && x_other == x_self)
-        return "Up";
-    else if(y_self - 1 == y_other && x_other == x_self)
         return "Down";
+    else if(x_self - 1 == x_other && y_other == y_self)
+        return "Up";
+    else if(y_self + 1 == y_other && x_other == x_self)
+        return "Right";
+    else if(y_self - 1 == y_other && x_other == x_self)
+        return "Left";
     else
         return "";
 }
@@ -315,14 +365,17 @@ std::list<State<std::pair<int,int>>*> Matrix::getAllPossibleStates(State<std::pa
     std::pair<int,int> p = (state->getState());
     int x = p.first, y = p.second;
     std::list<State<std::pair<int,int>>*> posibleStates;
-    if(y < sizeC - 1)
-        posibleStates.push_back(states[x*sizeR + y + 1]);
-    if(y > 0)
-        posibleStates.push_back(states[x*sizeR + y  - 1]);
     if(x < sizeR - 1)
         posibleStates.push_back(states[(x + 1)*sizeR + y ]);
-    if(x > 0)
+    if(y < sizeC - 1) {
+        posibleStates.push_back(states[x*sizeR + y + 1]);
+    }
+    if(x > 0) {
         posibleStates.push_back(states[(x - 1)*sizeR + y ]);
+    }
+    if(y > 0) {
+        posibleStates.push_back(states[x*sizeR + y  - 1]);
+    }
     return posibleStates;
 }
 
@@ -510,7 +563,7 @@ std::vector<std::string> AStar<T>::search(Searchable<T> *searchable) {
         }
         list<State<pair<int, int>> *> neighborsOfNode = searchable->getAllPossibleStates(node);
         for (State<T> *state : neighborsOfNode) {
-            if(state == NULL)
+            if(state == NULL || state->getCost() == -1)
                 continue;
             currentCost = node->getMoving() + state->getCost();
             if (closed.find(state->toString()) == closed.end() && (!this->isInOpen(state))) {
@@ -570,6 +623,8 @@ std::vector<std::string> BestFirstSearch<T>::search(Searchable<T>* searchable) {
             return sol->getPath();
         }
         for(State<T>* state : searchable->getAllPossibleStates(n)) {
+            if(state == NULL || state->getCost() == -1)
+                continue;
             if(!this->isInOpen(state) && closed.find(state->toString()) == closed.end()) {
                 state->setWhereFrom(n);
                 this->OpenInset(state);
@@ -620,9 +675,9 @@ std::vector<std::string>  BreadthFirstSearch<T>::search(Searchable<T> *searchabl
             Path<T> *sol = new Path<T>(currentNode);
             return sol->getPath();
         }
-        std::list<State<T>*> neighborsOfNode = searchable->getAllPossibleStates(currentNode);
-        auto iterator = neighborsOfNode.begin();
         for (State<T>* state : searchable->getAllPossibleStates(currentNode)) {
+            if(state == NULL || state->getCost() == -1)
+                continue;
             currentCost = currentNode->getCost() + state->getMoving();
             if (!this->isInOpen(state) && closed.find(state->toString()) == closed.end()) {
                 closed.insert({state->toString(),state});
@@ -661,6 +716,7 @@ std::vector<std::string> search(Searchable<T>* searchable) override;
 bool isInOpen(State<T> *state);
 int numOfNodesEvaluated() override ;
 void resetnodes() override ;
+void update(State<T>* state);
 ~DepthFirstSearch();
 };
 
@@ -682,32 +738,21 @@ std::vector<std::string> DepthFirstSearch<T>::search(Searchable<T> *searchable) 
         evaluatedNodes++;
         closed.insert({node->toString(),node});
         if(searchable->isGoalState(node)) {
-            if(minCost == 0){
-                minCost = node->getMoving();
-                bestPath = node->clone();
-            }
-            else if(node->getMoving() < minCost) {
-                minCost = node->getMoving();
-                bestPath = node->clone();
-            }
+            Path<T>* sol = new Path<T>(node);
+            return sol ->getPath();
         }
         std::list<State<T>*> neighbors = searchable->getAllPossibleStates(node);
         for(State<T>* state : neighbors) {
+            if(state == NULL || state->getCost() == -1) {
+                continue;
+            }
             if(closed.find(state->toString()) == closed.end() && !isInOpen(state)) {
                 state->setWhereFrom(node);
                 open.push(state);
             }
-            else if(isInOpen(state)) {
-                if(state->getMoving() > state->getCost() + node->getMoving()) {
-                    state->setWhereFrom(node);
-                }
-            }
         }
     }
-    if(bestPath == 0)
-        std::cerr<<"no path found"<<endl;
-    Path<T>* sol = new Path<T>(bestPath);
-    return sol ->getPath();
+    std::cerr<<"no path found"<<endl;
 }
 
 template <class T>
@@ -733,7 +778,20 @@ int DepthFirstSearch<T>::numOfNodesEvaluated() { return evaluatedNodes; }
 template <class T>
 void DepthFirstSearch<T>::resetnodes() { evaluatedNodes = 0;}
 
-
+template <class T>
+void DepthFirstSearch<T>::update(State<T> *state) {
+    stack<State<T>*> temp;
+    while(!state->Equal(open.top())) {
+        temp.push(open.top());
+        open.pop();
+    }
+    open.pop();
+    while(!temp.empty()) {
+        open.push(temp.top());
+        temp.pop();
+    }
+    open.push(state);
+}
 
 
 //-----------------------------------------------------------------------------
@@ -775,48 +833,85 @@ void AlgorithemsTesting::testall()  {
     }
 
     //testing Astar
+    ofstream fileA("Astar.txt",ios::out);
     Searcher<pair<int,int>,AStarComperator<pair<int,int>>> *searcherA;
     for(int i = 0; i < matrixex.size() ; i++) {
         searcherA = new AStar<pair<int,int>>();
         vector<string> As = searcherA->search(new Matrix(matrixex[i]));
         evaluatedNodes[0][i] = searcherA->numOfNodesEvaluated();
         searcherA->resetnodes();
+        if(fileA) {
+            fileA<<"size: "<<matrixex[i].back()<<" ";
+            for(string side : As) {
+                fileA<<side<<",";
+            }
+            fileA<<"\n";
+        }
     }
+    ofstream fileBf("BestFirstSearch.txt",ios::out);
     //testing best-first-search
     for(int i = 0; i < matrixex.size() ; i++) {
         Searcher<pair<int,int>,BestFirstSearchComperator<pair<int,int>>> *searcherBe = new BestFirstSearch<pair<int,int>>();
-        vector<string> As = searcherBe->search(new Matrix(matrixex[i]));
+        vector<string> Bf = searcherBe->search(new Matrix(matrixex[i]));
         evaluatedNodes[1][i] = searcherBe->numOfNodesEvaluated();
         searcherBe->resetnodes();
+        if(fileBf) {
+            fileBf<<"size: "<<matrixex[i].back()<<" ";
+            for(string side : Bf) {
+                fileBf<<side<<",";
+            }
+            fileBf<<"\n";
+        }
     }
+    ofstream fileBFS("BFS.txt",ios::out);
     for(int i = 0; i < matrixex.size() ; i++) {
         ISearcher<pair<int,int>,vector<string>> *searcherBFS = new BreadthFirstSearch<pair<int,int>>();
-        vector<string> As = searcherBFS->search(new Matrix(matrixex[i]));
+        vector<string> Bfs = searcherBFS->search(new Matrix(matrixex[i]));
         evaluatedNodes[2][i] = searcherBFS->numOfNodesEvaluated();
         searcherBFS->resetnodes();
+        if(fileBFS) {
+            fileBFS<<"size: "<<matrixex[i].back()<<" ";
+            for(string side : Bfs) {
+                if(side.length() > 0)
+                    fileBFS<<side<<",";
+            }
+            fileBFS<<"\n";
+        }
     }
+    ofstream fileDFS("DFS.txt",ios::out);
     for(int i = 0; i < matrixex.size() ; i++) {
         ISearcher<pair<int,int>,vector<string>> *searcherDFS = new DepthFirstSearch<pair<int,int>>();
-        vector<string> As = searcherDFS->search(new Matrix(matrixex[i]));
+        vector<string> Dfs = searcherDFS->search(new Matrix(matrixex[i]));
         evaluatedNodes[3][i] = searcherDFS->numOfNodesEvaluated();
         searcherDFS->resetnodes();
+        if(fileDFS) {
+            fileDFS<<"size: "<<matrixex[i].back()<<" ";
+            for(string side : Dfs) {
+                fileDFS<<side<<",";
+            }
+            fileDFS<<"\n";
+        }
     }
     cout<<"num in Astar :";
     for(int i = 0; i < 10; i++) {
         cout<<" in matrix "<<i + 1<<" : " <<evaluatedNodes[0][i];
     }
+
     cout<<endl<<"num in BestFS :";
     for(int i = 0; i < 10; i++) {
         cout<<" in matrix "<<i + 1<<": " << evaluatedNodes[0][i];
     }
+
     cout<<endl<<"num in BFS :";
     for(int i = 0; i < 10; i++) {
         cout<<" in matrix "<<i + 1<< " : " <<evaluatedNodes[0][i];
     }
+
     cout<<endl<<"num in DFS :";
     for(int i = 0; i < 10; i++) {
         cout<<" in matrix "<<i + 1<< " : " <<evaluatedNodes[0][i];
     }
+
 }
 
 
@@ -841,15 +936,15 @@ public:
 
 
 //-----------------------------------------------------------------------------
-class Server {
-protected:
-    int _server_socket;
+    class Server {
+    protected:
+        int _server_socket;
 
-public:
-    virtual void open(int port, ClientHandler *cm) = 0;
-    virtual void stop() = 0;
-};
+    public:
+        virtual void open(int port, ClientHandler *cm) = 0;
 
+        virtual void stop() = 0;
+    };
 
 
 
@@ -885,7 +980,8 @@ FileCacheManager * FileCacheManager::getFileCacheManager() {
  * @return  if there is an existed solution
  */
 bool FileCacheManager::Find(string problem) {
-    return (solutions.find(problem)!=solutions.end());
+    hash<string> hasher;
+    return (solutions.find(to_string(hasher(problem)))!=solutions.end());
 }
 
 /**
@@ -894,14 +990,16 @@ bool FileCacheManager::Find(string problem) {
  * @param problem
  */
 void FileCacheManager::save(string solution, string problem) {
+    hash<string> hasher;
+    size_t problem_hash = hasher(problem);
     fstream file;
-    file.open(problem,ios::out);
+    file.open(to_string(problem_hash),ios::out);
     if(!file){
         throw "no file been opened";
     }
     file<<solution<<endl;
     file.close();
-    if(!Find(problem)) {
+    if(!Find(to_string(problem_hash))) {
         solutions.insert(pair<string,string>{problem,problem});
     }
 }
@@ -913,8 +1011,9 @@ void FileCacheManager::save(string solution, string problem) {
  */
 string FileCacheManager::get(string problem) {
     if(Find(problem)) {
+        hash<string> hasher;
         fstream file;
-        file.open(problem,ios::in);
+        file.open(to_string(hasher(problem)),ios::in);
         if(!file) {
             throw "no file been opened";
         }
@@ -937,19 +1036,21 @@ public:
 
 
 //-----------------------------------------------------------------------------
-template <class T,class Solution>
-class SolverSearch : public Solver<Solution,Searchable<T>*> {
+template <class T,class Solution,class Problem>
+class SolverSearch : public Solver<Solution,Problem> {
 ISearcher<T,Solution>* _searcher;
 public:
     SolverSearch(ISearcher<T,Solution>* searcher);
-    Solution solve(Searchable<T>* problem) override ;
+    Solution solve(Problem problem) override ;
 };
 
-template <class T,class Solution>
-SolverSearch<T,Solution>::SolverSearch(ISearcher<T, Solution> *searcher) { _searcher = searcher;}
+template <class T,class Solution,class Problem>
+SolverSearch<T,Solution,Problem>::SolverSearch(ISearcher<T, Solution> *searcher) {
+    this->_searcher = searcher;
+}
 
-template <class T,class Solution>
-Solution SolverSearch<T,Solution>::solve(Searchable<T> *problem) {
+template <class T,class Solution,class Problem>
+Solution SolverSearch<T, Solution, Problem>::solve(Problem problem) {
     return _searcher->search(problem);
 }
 
@@ -1258,5 +1359,21 @@ namespace boot {
 //-------------------------------------------------------------------------------
 
 int main(int argc, char** argv) {
-    
+    test->testall();
+    Server* server = new MyParallelServer();
+    ISearcher<pair<int,int>,vector<string>>* searcher = new AStar<pair<int, int>>();
+    Solver<vector<string>,Matrix*>* adapter = new SolverSearch<pair<int,int>,vector<string>,Matrix*>(searcher);
+    CacheManager<string,string>* cm = FileCacheManager::getFileCacheManager();
+    MyClientHandler* handler = new MyClientHandler(adapter,cm);
+
+    //cout << "started server" << endl;
+    if(argc>=2)
+        server->open(atoi(argv[1]), handler);
+    else
+        server->open(5600, handler);
+    //5State<int> state;
+    //MyPriorityQueue<int> queue();
+    //server->open(5600, handle);
+
+    return 0;
 }
