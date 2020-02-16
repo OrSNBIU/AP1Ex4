@@ -208,7 +208,7 @@ std::vector<std::string> Path<T>::getPath() {
     for(int i = 0;i < path.size();i++) {
         State<T>* curr = path.back();
         path.pop_back();
-        moves.push_back(curr->getSide(path.back()));
+        moves.push_back(curr->getSide(path.back())+ "("+to_string((int) (curr->getCost())) + ")");
     }
     return moves;
 }
@@ -848,8 +848,10 @@ void AlgorithemsTesting::testall()  {
             fileA<<"\n";
         }
     }
-    ofstream fileBf("BestFirstSearch.txt",ios::out);
+
+
     //testing best-first-search
+    ofstream fileBf("BestFirstSearch.txt",ios::out);
     for(int i = 0; i < matrixex.size() ; i++) {
         Searcher<pair<int,int>,BestFirstSearchComperator<pair<int,int>>> *searcherBe = new BestFirstSearch<pair<int,int>>();
         vector<string> Bf = searcherBe->search(new Matrix(matrixex[i]));
@@ -863,6 +865,8 @@ void AlgorithemsTesting::testall()  {
             fileBf<<"\n";
         }
     }
+
+    //test
     ofstream fileBFS("BFS.txt",ios::out);
     for(int i = 0; i < matrixex.size() ; i++) {
         ISearcher<pair<int,int>,vector<string>> *searcherBFS = new BreadthFirstSearch<pair<int,int>>();
@@ -878,6 +882,8 @@ void AlgorithemsTesting::testall()  {
             fileBFS<<"\n";
         }
     }
+
+
     ofstream fileDFS("DFS.txt",ios::out);
     for(int i = 0; i < matrixex.size() ; i++) {
         ISearcher<pair<int,int>,vector<string>> *searcherDFS = new DepthFirstSearch<pair<int,int>>();
@@ -892,6 +898,7 @@ void AlgorithemsTesting::testall()  {
             fileDFS<<"\n";
         }
     }
+
     cout<<"num in Astar :";
     for(int i = 0; i < 10; i++) {
         cout<<" in matrix "<<i + 1<<" : " <<evaluatedNodes[0][i];
@@ -899,17 +906,18 @@ void AlgorithemsTesting::testall()  {
 
     cout<<endl<<"num in BestFS :";
     for(int i = 0; i < 10; i++) {
-        cout<<" in matrix "<<i + 1<<": " << evaluatedNodes[0][i];
+        cout<<" in matrix "<<i + 1<<": " << evaluatedNodes[1][i];
     }
 
     cout<<endl<<"num in BFS :";
     for(int i = 0; i < 10; i++) {
-        cout<<" in matrix "<<i + 1<< " : " <<evaluatedNodes[0][i];
+        cout<<" in matrix "<<i + 1<< " : " <<evaluatedNodes[2][i];
     }
 
-    cout<<endl<<"num in DFS :";
+    cout<<endl;
+    cout<<"num in DFS :";
     for(int i = 0; i < 10; i++) {
-        cout<<" in matrix "<<i + 1<< " : " <<evaluatedNodes[0][i];
+        cout<<" in matrix "<<i + 1<< " : " <<evaluatedNodes[3][i];
     }
 
 }
@@ -1359,25 +1367,16 @@ namespace boot {
 //-------------------------------------------------------------------------------
 
 int main(int argc, char** argv) {
-    //test->testall(); //For Testing purposes.
-    Server* server = new MyParallelServer();
+     Server* server = new MyParallelServer();
     ISearcher<pair<int,int>,vector<string>>* searcher = new AStar<pair<int, int>>();
     Solver<vector<string>,Matrix*>* adapter = new SolverSearch<pair<int,int>,vector<string>,Matrix*>(searcher);
     CacheManager<string,string>* cm = FileCacheManager::getFileCacheManager();
     MyClientHandler* handler = new MyClientHandler(adapter,cm);
 
-    //cout << "started server" << endl;
-    if (argc < 2) {
-        server->open(5400, handler);
-        server->open(atoi(argv[1]), handler);
-    }
     if(argc>=2)
         server->open(atoi(argv[1]), handler);
     else
         server->open(5600, handler);
-    //5State<int> state;
-    //MyPriorityQueue<int> queue();
-    //server->open(5600, handle);
 
     return 0;
 }
