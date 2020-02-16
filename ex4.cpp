@@ -1367,6 +1367,10 @@ int main(int argc, char** argv) {
     MyClientHandler* handler = new MyClientHandler(adapter,cm);
 
     //cout << "started server" << endl;
+    if (argc < 2) {
+        server->open(5400, handler);
+        server->open(atoi(argv[1]), handler);
+    }
     if(argc>=2)
         server->open(atoi(argv[1]), handler);
     else
