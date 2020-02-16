@@ -1359,7 +1359,7 @@ namespace boot {
 //-------------------------------------------------------------------------------
 
 int main(int argc, char** argv) {
-    test->testall();
+    //test->testall(); //For Testing purposes.
     Server* server = new MyParallelServer();
     ISearcher<pair<int,int>,vector<string>>* searcher = new AStar<pair<int, int>>();
     Solver<vector<string>,Matrix*>* adapter = new SolverSearch<pair<int,int>,vector<string>,Matrix*>(searcher);
